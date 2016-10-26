@@ -10,7 +10,8 @@ import UIKit
 
 class AddItemViewController: UIViewController {
 
-    @IBOutlet weak var labelToChange: UILabel!
+    @IBOutlet weak var taskDescription: UITextView!
+    @IBOutlet weak var taskTitle: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,16 @@ class AddItemViewController: UIViewController {
     
     @IBAction func addItem(_ sender: AnyObject) {
         //self.labelToChange.text = "changed"
+        let defaults = UserDefaults.standard
+        var tasks = defaults.array(forKey: "tasks")
+        if tasks == nil {
+            tasks = Array()
+        }
+        tasks!.append([ "title" : self.taskTitle.text!,
+                        "description" : self.taskDescription.text!
+        ])
+        defaults.set(tasks, forKey: "tasks")
+        
         
         self.dismiss(animated: true, completion: nil)
     }
